@@ -11,8 +11,7 @@ Interactive Menu(coming soon) <br>
 > Any and all feedback is accepted. You can DM me on [Discord](https://discord.com/users/1044631490165755914), or create an issue.
 
 ## Known Issues
-Unity Errors <br>
-Extreme Lag <br>
+None, *for now...* <br>
 
 **THIS MOD IS NOT GUARANTEED TO WORK WITH THE LATEST VERSION OF AMONG US**
 
