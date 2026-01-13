@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AllOfUs.MiraAPI" Version="0.3.5" />
+        <PackageReference Include="Lib.Harmony" Version="2.4.2" />
+        <PackageReference Include="Reactor" Version="2.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+          <HintPath>libs/Assembly-CSharp-2025.3.25.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>libs/Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+          <HintPath>libs/UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>libs/UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.ImageConversionModule">
+          <HintPath>..\..\..\..\..\Games\Among Us\Mods\UnityExplorer\BepInEx\interop\UnityEngine.ImageConversionModule.dll</HintPath>
+        </Reference>
+
+        <Reference Include="UnityEngine.UI">
+            <HintPath>libs/UnityEngine.UI.dll</HintPath>
+        </Reference>
+        
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>libs/Il2Cppmscorlib.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="libs\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\BG.jpeg" />
+    </ItemGroup>
+
+</Project>

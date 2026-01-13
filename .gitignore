@@ -1,0 +1,9 @@
+## Build Folders
+bin/
+obj/
+libs/
+
+# Rider Folders
+MainMenuEnhanced.sln.DotSettings.user
+Signal.sln.DotSettings.user
+.idea/
