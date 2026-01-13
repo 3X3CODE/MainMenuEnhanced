@@ -1,7 +1,6 @@
 using HarmonyLib;
 using UnityEngine;
 using TMPro;
-using Object = UnityEngine.Object;
 
 namespace HarPatch;
 
@@ -13,23 +12,25 @@ public class MenuPatch : MonoBehaviour
     [HarmonyPostfix]
     public static void Patch(MainMenuManager __instance)
     {
+        if (__instance == null) return;
         Transform divider = __instance.transform.Find("MainUI/AspectScaler/RightPanel/MaskedBlackScreen/GameModeButtons/Divider"); 
-        Transform header = __instance.transform.Find("MainUI/AspectScaler/RightPanel/MaskedBlackScreen/GameModeButtons/Header/Text_TMP"); 
+        Transform headerTrans = __instance.transform.Find("MainUI/AspectScaler/RightPanel/MaskedBlackScreen/GameModeButtons/Header/Text_TMP"); 
         if (divider != null) divider.gameObject.SetActive(false);
                     
-        if (header != null) 
+        if (headerTrans != null)
         {
-            var trans = header.gameObject.GetComponent<TextTranslatorTMP>();
-            var text = header.gameObject.GetComponent<TextMeshPro>();
-            if (trans != null)
+            var HeaderObject = headerTrans.gameObject;
+            if (HeaderObject != null)
             {
-                Object.Destroy(trans);
-            }
-            if (text != null)
-            {
-                text.text = "Main Menu Enhanced";
+                if (HeaderObject.TryGetComponent<TextTranslatorTMP>(out var tmp))
+                {
+                    tmp.enabled = false;
+                }
+                if (HeaderObject.TryGetComponent<TextMeshPro>(out var text))
+                {
+                    text.text = "Begin";
+                }
             }
         }
-
     }
 }

@@ -1,7 +1,6 @@
 using HarmonyLib;
 using UnityEngine;
 using TMPro;
-using Object = UnityEngine.Object;
 
 namespace HarPatch;
 
@@ -14,87 +13,113 @@ public static class RemoveBg
     {
         if (__instance == null) return;
 
-            
-            #region ScreenMask
 
-            // Disable mask on MainMenu
-            var bg = GameObject.Find("BackgroundTexture").GetComponent<SpriteRenderer>();
-            
-            if (bg != null)
+        #region ScreenMask
+
+        // Disable mask on MainMenu
+        var bg = GameObject.Find("BackgroundTexture");
+        ObjectCheck(bg);
+        if (bg != null)
+        {
+            if (bg.TryGetComponent<SpriteRenderer>(out var renderer))
             {
-                bg.maskInteraction = SpriteMaskInteraction.None;
-                bg.sprite = AssetLoader.LoadExternalSprite();
-
-                /*Sprite CustomBG = AssetLoader.LoadEmbeddedSprite("HarPatch.Resources.BG.jpeg");
-                bg.sprite = CustomBG;*/
-                // bg.sprite = Assets.bg;
-                // SignalButton.LogSource.LogInfo("BG changed");
+                RendCheck(renderer);
+                renderer.maskInteraction = SpriteMaskInteraction.None;
+                renderer.sprite = AssetLoader.LoadExternalSprite();
             }
+        }
+        //MiraAPI code if needed in the future
 
-            #endregion
+        /*Sprite CustomBG = AssetLoader.LoadEmbeddedSprite("HarPatch.Resources.BG.jpeg");
+         bg.sprite = CustomBG;
+          bg.sprite = Assets.bg;
+          SignalButton.LogSource.LogInfo("BG changed");
+         */
 
-            #region DisableObjects
+        #endregion
+        
+        #region DisableObjects
 
             DisableObject("WindowShine");
 
             #endregion
 
-            #region Remove SRenderers
+        #region Remove SRenderers
 
             DisableComponent("RightPanel");
             DisableComponent("MaskedBlackScreen");
 
             #endregion
 
-            #region change text
+        #region change text
 
-            // rename playbutton
-            var playbuttonText = GameObject.Find("PlayButton").GetComponentInChildren<TextMeshPro>();
-            var playbuttonTrans = GameObject.Find("PlayButton").GetComponentInChildren<TextTranslatorTMP>();
-            if (playbuttonText != null && playbuttonTrans != null)
+            Transform playTransform = __instance.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP");
+            if (playTransform != null) 
             {
-                Object.Destroy(playbuttonTrans);
-                playbuttonText.text = "MainMenuEnhanced";
+                var playbutton = playTransform.gameObject;
+                ObjectCheck(playbutton);
+                if (playbutton != null)
+                {
+                    if (playbutton.TryGetComponent<TextTranslatorTMP>(out var tmp))
+                    {
+                        tmp.enabled = false;
+                    }
+                    if (playbutton.TryGetComponent<TextMeshPro>(out var text))
+                    {
+                        text.text = "Start";
+                    }
+                }
             }
-            else MainMenuEnhancedPlugin.LogSource.LogInfo("Translator or Text not found");
-
-            var butText = GameObject.Find("PlayButton").GetComponentInChildren<TextMeshPro>();
-            var butTrans = GameObject.Find("PlayButton").GetComponentInChildren<TextTranslatorTMP>();
-            if (butText != null && butTrans != null)
-            {
-                Object.Destroy(butTrans);
-                butText.text = "Start";
-            }
-            else MainMenuEnhancedPlugin.LogSource.LogInfo("Button Text or Translator not found");
-
             #endregion
 
-
-            #region Methods
+        #region Methods
             
             static void DisableObject(string name)
             {
                 var obj = GameObject.Find(name);
+                ObjectCheck(obj);
                 if (obj != null)
                 {
                     obj.SetActive(false);
+                    MainMenuEnhancedPlugin.LogSource.LogInfo(name + " Disabled");
                 }
             }
 
             static void DisableComponent(string name)
             {
                 var obj = GameObject.Find(name);
+                ObjectCheck(obj);
                 if (obj != null)
                 {
                     if (obj.TryGetComponent<SpriteRenderer>(out var renderer))
                     {
-                        Object.Destroy(renderer);
-                        MainMenuEnhancedPlugin.LogSource.LogInfo(name + " Renderer destroyed");
+                        RendCheck(renderer);
+                        renderer.enabled = false;
+                        MainMenuEnhancedPlugin.LogSource.LogInfo(name + " Renderer disabled");
                     }
                 }
             }
-            #endregion
+            
+            
+            static void ObjectCheck(GameObject go)
+            { 
+                if (go == null) 
+                {
+                    MainMenuEnhancedPlugin.LogSource.LogInfo(go.name + " was null");
+                    return;
+                }       
+            } 
+            static void RendCheck(SpriteRenderer go)
+            { 
+                if (go == null) 
+                {
+                    MainMenuEnhancedPlugin.LogSource.LogInfo(go.gameObject.name + " was null");
+                    return;
+                }       
+            } 
+        #endregion
         
        
     }
+    
 }
