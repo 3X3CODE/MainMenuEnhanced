@@ -7,7 +7,7 @@ Interactive Menu(coming soon) <br>
 
 > [!IMPORTANT]
 > **This mod is still in BETA** <br>
-> Issues are expected. Fixes are coming soon.
+> Issues are expected. Fixes are coming soon. <br>
 > Any and all feedback is accepted. You can DM me on [Discord](https://discord.com/users/1044631490165755914), or create an issue.
 
 ## Known Issues
