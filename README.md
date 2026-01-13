@@ -28,7 +28,7 @@ An example,
 
 >[!NOTE]
 >This mod is licensed under GPL v3.0. <br>
->Copyright (C) 2026 3X3C <br>
+>[Copyright (C) 2026 3X3C](https://github.com/3X3CODE/MainMenuEnhanced/blob/main/LICENSE) <br>
 
 <sub>
   This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
