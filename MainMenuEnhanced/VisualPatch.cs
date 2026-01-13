@@ -28,6 +28,14 @@ public static class RemoveBg
                 renderer.sprite = AssetLoader.LoadExternalSprite();
             }
         }
+        
+        Transform tintTrans = __instance.transform.Find("MainUI/Tint");
+        var tint = tintTrans.gameObject;
+        ObjectCheck(tint);
+        if (tint != null)
+        {
+            tint.SetActive(false);
+        }
         //MiraAPI code if needed in the future
 
         /*Sprite CustomBG = AssetLoader.LoadEmbeddedSprite("HarPatch.Resources.BG.jpeg");

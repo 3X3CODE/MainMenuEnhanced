@@ -9,7 +9,7 @@ namespace HarPatch;
 // Developed by 3X3C | 2026.01.12 | My First Mod:MainMenuEnhanced
 
 [BepInProcess("Among Us.exe")]
-[BepInPlugin("com.3x3c.MainMenuEnhanced", "Main Menu Enhanced", "0.0.1")]
+[BepInPlugin("com.3x3c.MainMenuEnhanced", "Main Menu Enhanced", "0.1.1")]
 [BepInDependency("gg.reactor.api")]
 public class MainMenuEnhancedPlugin : BasePlugin
 {
@@ -24,7 +24,7 @@ public class MainMenuEnhancedPlugin : BasePlugin
     {
         LogSource = base.Log;
         //ExampleEventHandlers.Initialize();
-        ReactorCredits.Register("MainMenuEnhanced", "0.0.1", true, null);
+        ReactorCredits.Register("MainMenuEnhanced", "0.1.1", false, null);
         Harmony.PatchAll();
         LogSource.LogInfo("MenuLoaded");
     }
