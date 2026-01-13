@@ -24,7 +24,7 @@ An example,
 `CustomBG.png`
 
 > [!WARNING]
-> This mod requires **BepInEx** and **Reactor** to function properly. <br>
+> This mod requires **[BepInEx](https://builds.bepinex.dev/projects/bepinex_be)** and **[Reactor](https://github.com/nuclearpowered/reactor)** to function properly. <br>
 
 >[!NOTE]
 >This mod is licensed under GPL v3.0. <br>
