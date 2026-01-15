@@ -7,6 +7,7 @@ An Among Us mod that adds changes to the MainMenu.
 ## Features
 Change Menu Background <br>
 Interactive Menu(coming soon) <br>
+<br>
 *More features coming soon!*
 
 > [!IMPORTANT]
