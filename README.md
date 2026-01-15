@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="Resources/GitHubBanner.png" width="100%">
+</p>
+
 # MainMenuEnhanced
 An Among Us mod that adds changes to the MainMenu.
 ## Features
