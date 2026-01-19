@@ -1,4 +1,5 @@
 using HarmonyLib;
+using MainMenuEnhanced.InteractiveMenu;
 using UnityEngine;
 using TMPro;
 
@@ -127,7 +128,10 @@ public static class RemoveBg
             } 
         #endregion
         
-       
+        //GameObject host = new GameObject("particleManager");
+        GameObject amb = GameObject.Find("PlayerParticles");
+        //host.transform.SetParent(amb.transform);
+        amb.AddComponent<ParticleController>();
     }
     
 }

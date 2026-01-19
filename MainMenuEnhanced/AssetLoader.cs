@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using BepInEx;
+using Il2CppInterop.Runtime;
 
 namespace HarPatch;
 
@@ -44,5 +46,38 @@ public static class AssetLoader
         }
 
         return null;
+    }
+
+    public static GameObject LoadAsset(string bundleName, string assetName)
+    {
+        Assembly asm = Assembly.GetExecutingAssembly();
+
+        string resourceName = asm.GetManifestResourceNames()
+            .FirstOrDefault(name => name.Contains(bundleName));
+
+        if (resourceName == null)
+        {
+            MainMenuEnhancedPlugin.LogSource.LogError($"[Mod] Could not find {bundleName} in DLL");
+            return null;
+        }
+
+        using (Stream s = asm.GetManifestResourceStream(resourceName))
+        {
+            byte[] buffer = new byte[s.Length];
+            s.Read(buffer, 0, buffer.Length);
+
+            AssetBundle bundle = AssetBundle.LoadFromMemory(buffer);
+
+            if (bundle == null)
+            {
+                MainMenuEnhancedPlugin.LogSource.LogError($"[Mod] Failed to load bundle from memory");
+                return null;
+            }
+
+            var asset = bundle.LoadAsset(assetName, Il2CppInterop.Runtime.Il2CppType.Of<GameObject>());
+            GameObject prefab = asset.Cast<GameObject>();
+            bundle.Unload(false);
+            return prefab;
+        }
     }
 }
