@@ -77,7 +77,7 @@ public class ParticleController  : MonoBehaviour
         if (CustomParticles.Length == 0) return;
         foreach (PlayerParticle particle in CustomParticles)
         {
-            //if (particle != null) return;
+            if (particle == null) return;
             Vector3 p = particle.gameObject.transform.position;
             float distance = Vector3.Distance(p, Vector3.zero);
             if (distance > 7f)
