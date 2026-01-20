@@ -12,16 +12,23 @@ public static class AssetLoader
 {
     // Path.Combine handles the slashes correctly for the user's OS
     // This points to: BepInEx/plugins/CustomBG.png
-    private static readonly string ImagePath = Path.Combine(Paths.PluginPath, "CustomBG.png");
+    private static readonly string ImagePathPNG = Path.Combine(Paths.PluginPath, "CustomBG.png");
+    private static readonly string ImagePathJPG = Path.Combine(Paths.PluginPath, "CustomBG.jpg");
+    private static readonly string ImagePathJPEG = Path.Combine(Paths.PluginPath, "CustomBG.jpeg");
+    private static string ImagePath;
 
     public static Sprite LoadExternalSprite()
     {
         // 1. Check if the file actually exists to prevent a crash
-        if (!File.Exists(ImagePath))
+        if (!File.Exists(ImagePathPNG) && !File.Exists(ImagePathJPG) && !File.Exists(ImagePathJPEG))
         {
-            MainMenuEnhancedPlugin.LogSource.LogWarning($"[Signal] External image not found at {ImagePath}. Using default background.");
+            MainMenuEnhancedPlugin.LogSource.LogWarning($"[Signal] External image not found at {ImagePathPNG}. Using default background.");
             return null;
         }
+
+        if (File.Exists(ImagePathPNG)) ImagePath = ImagePathPNG;
+        if (File.Exists(ImagePathJPG)) ImagePath = ImagePathJPG;
+        if (File.Exists(ImagePathJPEG)) ImagePath = ImagePathJPEG;
 
         try
         {
