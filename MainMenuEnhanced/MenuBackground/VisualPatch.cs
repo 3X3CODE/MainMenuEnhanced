@@ -1,9 +1,10 @@
 using HarmonyLib;
-using MainMenuEnhanced.InteractiveMenu;
+using MainPlugin.Assets;
+using MainPlugin.InteractiveMenu;
 using UnityEngine;
 using TMPro;
 
-namespace HarPatch;
+namespace MainPlugin.MenuBackground;
 
 // Resharper disable once InconsistentNaming
 [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]

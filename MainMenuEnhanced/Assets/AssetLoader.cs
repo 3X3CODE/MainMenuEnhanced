@@ -5,7 +5,7 @@ using UnityEngine;
 using BepInEx;
 using Il2CppInterop.Runtime;
 
-namespace HarPatch;
+namespace MainPlugin.Assets;
 
 // this assetloader code was made by Gemini since i was too lazy
 public static class AssetLoader
@@ -53,6 +53,38 @@ public static class AssetLoader
         }
 
         return null;
+    }
+
+    public static Sprite LoadSprite(string path)
+    {
+        if (!File.Exists(path))
+        {
+            MainMenuEnhancedPlugin.LogSource.LogInfo("sprite doesn't exist");
+        }
+        try
+        {
+            // 2. Read the raw bytes from the disk
+            byte[] fileData = File.ReadAllBytes(path);
+
+            // 3. Create a texture placeholder (size will be auto-adjusted by LoadImage)
+            Texture2D texture = new Texture2D(2, 2);
+
+            // 4. Load the bytes into the texture
+            // This requires the UnityEngine.ImageConversionModule reference
+            if (ImageConversion.LoadImage(texture, fileData))
+            {
+                // 5. Turn the texture into a Sprite
+                // Pivot (0.5f, 0.5f) centers the image
+                return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+        }
+        catch (Exception e)
+        {
+            MainMenuEnhancedPlugin.LogSource.LogError($"[Signal] Failed to load sprite: {e.Message}");
+        }
+
+        return null;
+    
     }
 
     public static GameObject LoadAsset(string bundleName, string assetName)

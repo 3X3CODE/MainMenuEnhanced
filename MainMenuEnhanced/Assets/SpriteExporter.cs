@@ -6,7 +6,7 @@ using BepInEx;
 using UnityEngine.Rendering;
 using Object = System.Object;
 
-namespace MainMenuEnhanced;
+namespace MainPlugin.Assets;
 
 public static class SpriteExporter
 {

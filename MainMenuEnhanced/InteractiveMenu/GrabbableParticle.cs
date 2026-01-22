@@ -1,8 +1,7 @@
-using HarPatch;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
-namespace MainMenuEnhanced.InteractiveMenu;
+namespace MainPlugin.InteractiveMenu;
 [RegisterInIl2Cpp]
 public class GrabbableParticle : MonoBehaviour
 {

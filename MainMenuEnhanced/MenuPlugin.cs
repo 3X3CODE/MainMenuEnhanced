@@ -1,21 +1,13 @@
-﻿using System.Reflection;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Reactor.Utilities;
 using BepInEx.Logging;
 using MiraAPI.PluginLoading;
 using BepInEx.Configuration;
-using UnityEngine;
-using System.IO;
-using MainMenuEnhanced.InteractiveMenu;
-using MiraAPI.Utilities.Assets;
-using Reactor.Utilities.Extensions;
 using UnityEngine.SceneManagement;
-using Object = System.Object;
-using UnityEngine.Events;
 
-namespace HarPatch;
+namespace MainPlugin;
 
 // Developed by 3X3C | 2026.01.12 | My First Mod:MainMenuEnhanced
 

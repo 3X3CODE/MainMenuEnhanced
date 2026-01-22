@@ -2,7 +2,7 @@ using Reactor.Utilities.Attributes;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MainMenuEnhanced.InteractiveMenu;
+namespace MainPlugin.InteractiveMenu;
 [RegisterInIl2Cpp]
 public class ParticleController  : MonoBehaviour
 {
