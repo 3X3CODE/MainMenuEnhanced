@@ -1,6 +1,7 @@
 using HarmonyLib;
 using MainPlugin.Assets;
 using MainPlugin.InteractiveMenu;
+using MainPlugin.Settings;
 using UnityEngine;
 using TMPro;
 
@@ -133,6 +134,9 @@ public static class RemoveBg
         GameObject amb = GameObject.Find("PlayerParticles");
         //host.transform.SetParent(amb.transform);
         amb.AddComponent<ParticleController>();
+        
+        //GameObject settings = new GameObject("settings");
+        //settings.AddComponent<SettingsButton>();
     }
     
 }

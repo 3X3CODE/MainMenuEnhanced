@@ -5,6 +5,8 @@ using Reactor.Utilities;
 using BepInEx.Logging;
 using MiraAPI.PluginLoading;
 using BepInEx.Configuration;
+using MainPlugin.Settings;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MainPlugin;
