@@ -4,12 +4,12 @@ using UnityEngine;
 namespace MainPlugin.Settings;
 
 [HarmonyPatch(typeof(MainMenuManager) , nameof(MainMenuManager.Start))]
-public class SettingsPatch
+public class ReferencePatches
 {
     [HarmonyPostfix]
     public static void Patch(MainMenuManager __instance)
     {
-        GameObject Settings = new GameObject("settings");
-        Settings.AddComponent<SettingsButton>();
+        GameObject Ref = new GameObject("ReferenceHolder");
+        Ref.AddComponent<ReferenceHolder>();
     }
 }

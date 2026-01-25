@@ -24,9 +24,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Assets\mainmenuenhanced" />
-      <EmbeddedResource Include="Assets\mainmenuenhanced" />
+      <None Remove="Assets\menu" />
+      <EmbeddedResource Include="Assets\menu" />
     </ItemGroup>
+    
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="copy /Y &quot;$(TargetPath)&quot; &quot;F:\Games\Among Us\Mods\UnityExplorer\BepInEx\plugins\&quot;&#xA;start &quot;&quot; &quot;F:\Games\Among Us\Mods\UnityExplorer\Among Us.exe&quot;" />

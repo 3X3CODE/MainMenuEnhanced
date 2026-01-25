@@ -20,48 +20,48 @@ public static class RemoveBg
         #region ScreenMask
 
         // Disable mask on MainMenu
-        var bg = GameObject.Find("BackgroundTexture");
-        ObjectCheck(bg);
-        if (bg != null)
-        {
-            if (bg.TryGetComponent<SpriteRenderer>(out var renderer))
+            var bg = GameObject.Find("BackgroundTexture");
+            ObjectCheck(bg);
+            if (bg != null)
             {
-                RendCheck(renderer);
-                renderer.maskInteraction = SpriteMaskInteraction.None;
-                renderer.sprite = AssetLoader.LoadExternalSprite();
+                if (bg.TryGetComponent<SpriteRenderer>(out var renderer))
+                {
+                    RendCheck(renderer);
+                    renderer.maskInteraction = SpriteMaskInteraction.None;
+                    renderer.sprite = AssetLoader.LoadExternalSprite();
+                }
             }
-        }
         
-        Transform tintTrans = __instance.transform.Find("MainUI/Tint");
-        var tint = tintTrans.gameObject;
-        ObjectCheck(tint);
-        if (tint != null)
-        {
-            tint.SetActive(false);
-        }
-        //MiraAPI code if needed in the future
+            Transform tintTrans = __instance.transform.Find("MainUI/Tint");
+            var tint = tintTrans.gameObject;
+            ObjectCheck(tint);
+            if (tint != null)
+            {
+                tint.SetActive(false);
+            }
+            //MiraAPI code if needed in the future
 
-        /*Sprite CustomBG = AssetLoader.LoadEmbeddedSprite("HarPatch.Resources.BG.jpeg");
+            /*Sprite CustomBG = AssetLoader.LoadEmbeddedSprite("HarPatch.Resources.BG.jpeg");
          bg.sprite = CustomBG;
           bg.sprite = Assets.bg;
           SignalButton.LogSource.LogInfo("BG changed");
          */
 
-        #endregion
+            #endregion
         
-        #region DisableObjects
+            #region DisableObjects
 
             DisableObject("WindowShine");
 
             #endregion
 
-        #region Remove SRenderers
+            #region Remove SRenderers
 
             DisableComponent("RightPanel");
             DisableComponent("MaskedBlackScreen");
 
             #endregion
-
+            
         #region change text
 
             Transform playTransform = __instance.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP");
