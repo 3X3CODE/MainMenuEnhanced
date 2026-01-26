@@ -1,7 +1,7 @@
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
-namespace MainPlugin.DragDrop;
+namespace MainPlugin.JSONreader;
 [RegisterInIl2Cpp]
 public class PropertyOverride : MonoBehaviour
 {
