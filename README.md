@@ -17,7 +17,9 @@ Customizable Menu <br>
 > Any and all feedback is accepted. You can DM me on [Discord](https://discord.com/users/1044631490165755914), or create an issue.
 
 ## Known Issues
-None, *for now...* <br>
+Errors while hot reloading on json. <br>
+Issue refinding gameobjects that were set inactive. <br>
+Other than those, none *for now...* <br>
 Feel free to report any and all issues. <br>
 
 **THIS MOD IS NOT GUARANTEED TO WORK WITH THE LATEST VERSION OF AMONG US**
