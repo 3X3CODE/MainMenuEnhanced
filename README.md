@@ -24,6 +24,9 @@ Feel free to report any and all issues. <br>
 
 **THIS MOD IS NOT GUARANTEED TO WORK WITH THE LATEST VERSION OF AMONG US**
 
+>[!NOTE]
+>You can view our documentation [here](https://github.com/3X3CODE/MainMenuEnhanced/blob/main/Documentation.md).
+
 ## Installation Guide
 Put `MainMenuEnhanced.dll` in the **`BepInEx/plugins`** folder. <br>
 Put your desired Background image in the same folder. <br>
