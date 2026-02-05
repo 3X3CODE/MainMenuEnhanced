@@ -3,7 +3,7 @@
 
 ## Features and Documentation<br>
 ### Custom menu background<br>
-This feature changes the background image of the main menu to w hichever image you place in your **BepInEx/plugins/** folder. Please note that the image should be either png, jpg or jpeg.<br>
+This feature changes the background image of the main menu to whichever image you place in your **BepInEx/plugins/** folder. Please note that the image should be either png, jpg or jpeg.<br>
 The settings on how to change the workings of this feature will be discussed on the third feature.<br>
 ### Interactive Menu<br>
 One of my most favorite features. This allows you to grab and move the Player Particles on the main screen. There is an issue with this feature regarding Object Pooling however I have temporarily fixed it. <br>
@@ -32,18 +32,19 @@ All of these functions can be accessed through the Json file.<br>
 Those were the main functionality features. There are a couple of general settings for the mod included within the Json file.<br>
 
 
-* Change Menu Background image
-The setting: *“BackgroundOption”*
-The values: **”Default”, “Custom”, “None”**
-* Toggle window on/off
-The setting: *”WindowOption”*
+* Change Menu Background image <br>
+The setting: *“BackgroundOption”*<br>
+The values: **”Default”, “Custom”, “None”**<br>
+* Toggle window on/off<br>
+The setting: *”WindowOption”*<br>
 The values: **”Inactive”, “Active”**<br>
 
 
 Other than those features, in case you want to reset those values, you just need to set **”Save”: false**. Restart the game, and your Json file should be rewritten with the default settings.<br>
 
 
-> [!NOTE] Please know that hot reloading is currently a work-in-progress for this tool.<br>
+> [!NOTE]
+> Please know that hot reloading is currently a work-in-progress for this tool.<br>
 
 
 #### XML<br>
@@ -54,7 +55,8 @@ This file works on an array, therefore you can edit as many objects as you’d l
 As you may have noticed, each file has an option to set the EditActive and Position Active features. Setting “EditActive” to false, turns the code off entirely. The reason to check if the user wants the position editing to be on is because the default position values, **0**, changes the selected GameObjects position to 0 which changes the default position.<br>
 
 
-> [!Warning] These files currently have an issue where if you set the GameObject to “inactive”, the code will not find it again. So editing properties after it will not run unless you restart the game.<br>
+> [!Warning]
+> These files currently have an issue where if you set the GameObject to “inactive”, the code will not find it again. So editing properties after it will not run unless you restart the game.<br>
 
 
 ## Future Development Plans<br>
