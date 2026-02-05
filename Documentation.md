@@ -73,4 +73,7 @@ As you may have noticed, each file has an option to set the EditActive and Posit
 Congrats! You’ve reached the end of this document. Which means you either like reading, interested in this mod or just have time lying around. Nonetheless, thank you for trying out this mod.<br>
 
 
-# Thank You
+# Thank You <br>
+<sub>
+3X3C - 2026
+</sub>
