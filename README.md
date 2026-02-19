@@ -6,19 +6,26 @@
 An Among Us mod that adds changes to the MainMenu.
 ## Features
 Change Menu Background <br>
-Interactive Menu(coming soon) <br>
+Interactive Menu <br>
+Customizable Menu <br>
 <br>
 *More features coming soon!*
 
 > [!IMPORTANT]
 > **This mod is still in BETA** <br>
 > Issues are expected. Fixes are coming soon. <br>
-> Any and all feedback is accepted. You can DM me on [Discord](https://discord.com/users/1044631490165755914), or create an issue.
+> Any and all feedback is accepted. Please join the [Discord server](https://discord.gg/kU6dgkRwAB) for support and more information.
 
 ## Known Issues
-None, *for now...* <br>
+Errors while hot reloading on json. <br>
+Issue refinding gameobjects that were set inactive. <br>
+Other than those, none *for now...* <br>
+Feel free to report any and all issues. <br>
 
 **THIS MOD IS NOT GUARANTEED TO WORK WITH THE LATEST VERSION OF AMONG US**
+
+>[!NOTE]
+>You can view our documentation [here](https://github.com/3X3CODE/MainMenuEnhanced/blob/main/Documentation.md).
 
 ## Installation Guide
 Put `MainMenuEnhanced.dll` in the **`BepInEx/plugins`** folder. <br>
