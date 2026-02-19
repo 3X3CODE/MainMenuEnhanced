@@ -28,24 +28,11 @@ One of the bigger features. This allows you to take hold of any GameObject in th
 
 All of these functions can be accessed through the Json file.<br>
 
-
-Those were the main functionality features. There are a couple of general settings for the mod included within the Json file.<br>
-
-
-* Change Menu Background image <br>
-The setting: *“BackgroundOption”*<br>
-The values: **”Default”, “Custom”, “None”**<br>
-* Toggle window on/off<br>
-The setting: *”WindowOption”*<br>
-The values: **”Inactive”, “Active”**<br>
-
-
 Other than those features, in case you want to reset those values, you just need to set **”Save”: false**. Restart the game, and your Json file should be rewritten with the default settings.<br>
 
 
 > [!NOTE]
 > Please know that hot reloading is currently a work-in-progress for this tool.<br>
-
 
 #### XML<br>
 This file currently runs better and Hot-Reloading is supported. This file has less features than the Json, however I am planning to switch the settings entirely to this.<br>
