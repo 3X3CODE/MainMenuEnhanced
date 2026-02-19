@@ -48,7 +48,6 @@ As you may have noticed, each file has an option to set the EditActive and Posit
 
 ## Future Development Plans<br>
 * Change particle sprites
-* Add settings menu
 * Button to add more particles
 * Run Customizable Menu entirely on XML
 * Add more features to the Customizable Menu
