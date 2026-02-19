@@ -1,8 +1,15 @@
+using System.Collections;
+
+using Il2CppInterop.Runtime.Attributes;
+using Il2CppSystem.Collections.Generic;
+using MainMenuEnhanced.Helpers;
+using MainMenuEnhanced.Settings;
+using MainPlugin;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MainPlugin.InteractiveMenu;
+namespace MainMenuEnhanced.InteractiveMenu;
 [RegisterInIl2Cpp]
 public class ParticleController  : MonoBehaviour
 {
@@ -11,23 +18,27 @@ public class ParticleController  : MonoBehaviour
     PlayerParticle[] CustomParticles;
     public ObjectPoolBehavior basePool;
     public ObjectPoolBehavior pool;
-    public GameObject grabParticle;
     public bool AutoInit;
     public GameObject basePrefab;
-    public bool Detach;
+    public int index;
     private GameObject newParticle;
     private GameObject newPrefab;
     PlayerParticles mainManager;
 
+    private Coroutine _claimRoutine;
+
+    // TODO: Keep what we actually need and remove the rest
+    
     public void Start()
     {
+        transform.SetParent(GameObject.Find("ReferenceHolder").transform);
+        
+        GameObject particles = new GameObject("Particles");
         basePool = gameObject.GetComponent<ObjectPoolBehavior>();
         AutoInit = this.basePool.AutoInit;
-        Detach = this.basePool.DetachOnGet;
+        index = this.basePool.childIndex;
         basePrefab = this.basePool.Prefab.gameObject;
-        //newPrefab = this.basePool.Prefab.gameObject;
-        //newPrefab.AddComponent<GrabbableParticle>();
-        
+   
         Object.DestroyImmediate(basePool);
         
         newParticle = Instantiate(basePrefab);
@@ -49,7 +60,7 @@ public class ParticleController  : MonoBehaviour
         pool.inactiveChildren.Clear();
         
         this.pool.AutoInit = AutoInit;
-        this.pool.DetachOnGet = true;
+        this.pool.DetachOnGet = false;
         this.pool.Prefab = newParticle.GetComponent<PlayerParticle>();
         //this.pool.Prefab = newPrefab.GetComponent<PlayerParticle>();
         this.pool.poolSize = 12;
@@ -60,8 +71,7 @@ public class ParticleController  : MonoBehaviour
         this.pool.ReclaimAll();
         mainManager.Start();
         mainManager.Update();
-        
-        
+  
         baseParticles = UnityEngine.Object.FindObjectsOfType<PlayerParticle>(true);
         foreach (PlayerParticle particle in baseParticles)
         {
@@ -70,41 +80,35 @@ public class ParticleController  : MonoBehaviour
         }
         
         CustomParticles = UnityEngine.Object.FindObjectsOfType<PlayerParticle>(false);
-    }
-
-    private void Update()
-    {
         if (CustomParticles.Length == 0) return;
-        foreach (PlayerParticle particle in CustomParticles)
-        {
-            if (particle == null) return;
-            Vector3 p = particle.gameObject.transform.position;
-            float distance = Vector3.Distance(p, Vector3.zero);
-            if (distance > 7f)
+        
+    }
+    
+    [HideFromIl2Cpp]
+    public IEnumerator Claim()
+    {
+            foreach (PlayerParticle particleObject in CustomParticles)
             {
-                //this.pool.Reclaim(particle);
-                particle.enabled = false;
-                particle.gameObject.SetActive(false);
-                particle.transform.position = new Vector2(0f, 0f);
-                particle.gameObject.SetActive(true);
-                particle.enabled = true;
-                
-                //PlayerParticle newparticle = this.pool.Get<PlayerParticle>();
-                //mainManager.PlacePlayer(newparticle, false);
+                //if (particleObject == null) break; 
+                if (!particleObject.enabled) break;
+                GameObject particle = particleObject.gameObject;
+                Vector3 pos = particle.transform.position;
+                float distance = Vector3.Distance(pos, Vector3.zero);
+                if (distance > 7f)
+                {
+                    particleObject.enabled = false;
+                    yield return null;
+                    particle.SetActive(false);
+                    yield return null;
+                    particle.transform.position = new Vector2(0f, 0f);
+                    yield return null;
+                    particle.SetActive(true);
+                    yield return null;
+                    particleObject.enabled = true;
+                    yield return new WaitForSeconds(2f);
+                }
+
+                MainMenuEnhancedPlugin.LogSource.LogInfo("tracking particle");
             }
-            
-        }
-
-        /*if (this.pool.NotInUse > 0)
-        {
-            PlayerParticle particle = this.pool.Get<PlayerParticle>();
-            mainManager.PlacePlayer(particle, false);
-        }
-
-        if (this.pool.InUse < 12)
-        {
-            PlayerParticle particle = this.pool.Get<PlayerParticle>();
-            mainManager.PlacePlayer(particle, false);
-        }*/
     }
 }

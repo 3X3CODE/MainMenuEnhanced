@@ -1,8 +1,7 @@
 using HarmonyLib;
-using MainPlugin.JSONreader;
 using UnityEngine;
 
-namespace MainPlugin.Settings;
+namespace MainMenuEnhanced.Settings;
 
 [HarmonyPatch(typeof(MainMenuManager) , nameof(MainMenuManager.Start))]
 public class ReferencePatches

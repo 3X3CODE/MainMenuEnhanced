@@ -2,7 +2,7 @@ using HarmonyLib;
 using UnityEngine;
 using TMPro;
 
-namespace MainPlugin.MenuBackground;
+namespace MainMenuEnhanced.MenuBackground;
 
 // Resharper disable once InconsistentNaming
 [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]

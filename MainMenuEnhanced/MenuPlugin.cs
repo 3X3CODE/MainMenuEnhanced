@@ -1,34 +1,53 @@
-﻿using BepInEx;
+﻿using System.IO;
+using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Reactor.Utilities;
 using BepInEx.Logging;
 using BepInEx.Configuration;
+using MainMenuEnhanced.Settings;
 
 namespace MainPlugin;
 
 // Developed by 3X3C | 2026.01.12 | My First Mod:MainMenuEnhanced
 
 [BepInProcess("Among Us.exe")]
-[BepInPlugin("com.3x3c.MainMenuEnhanced", "Main Menu Enhanced", "0.1.2")]
+[BepInAutoPlugin]
 [BepInDependency("gg.reactor.api")]
-[BepInDependency("mira.api")]
-public class MainMenuEnhancedPlugin : BasePlugin
+public partial class MainMenuEnhancedPlugin : BasePlugin
 {
-    public static MainMenuEnhancedPlugin Instance;
     
     public static new ManualLogSource LogSource = null!;
-    public Harmony Harmony { get; } = new("com.3x3c.MainMenuEnhanced");
+    public Harmony Harmony { get; } = new(Id);
     public string OptionsTitleText => "Menu Enhanced";
     public ConfigFile GetConfigFile() => Config;
+
+    public static ConfigFile config;
+
+    public static ConfigEntry<CustomSettings> BackgroundMode;
+    public static ConfigEntry<CustomSettings> WindowMode;
+
+    private string folderPath = Path.Combine(Paths.PluginPath, "MainMenuEnhanced");
     
     public override void Load()
     {
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        config = Config;
+        
+        BackgroundMode = Config.Bind("Background", "background", CustomSettings.BackgroundDefault,
+            "What you want your menu background to be");
+        WindowMode = Config.Bind("Window", "window", CustomSettings.WindowActive,
+            "Whether you want the menu window to be active");
+
         LogSource = base.Log;
-        //ExampleEventHandlers.Initialize();
-        ReactorCredits.Register("MainMenuEnhanced", "0.1.2", false, null);
+   
+        ReactorCredits.Register("MainMenuEnhanced", "0.4.0", false, null);
         Harmony.PatchAll();
-        LogSource.LogInfo("MenuLoaded");
+        LogSource.LogInfo("MainMenuEnhanced Loaded");
         
     }
 
