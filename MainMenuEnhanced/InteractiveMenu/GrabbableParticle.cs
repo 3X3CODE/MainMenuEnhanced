@@ -24,8 +24,7 @@ public class GrabbableParticle : MonoBehaviour
         myParticle.enabled = false;
         myParticle.enabled = true;
         SpriteRenderer rend = gameObject.GetComponent<SpriteRenderer>();
-        gameObject.transform.SetParent(GameObject.Find("ParticleParent").transform);
-        rend.sortingOrder = -5;
+        rend.sortingOrder = -4;
 
         allRends = transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>();
     }

@@ -1,11 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net.Mime;
 using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using Reactor.Utilities;
 using BepInEx.Logging;
 using BepInEx.Configuration;
+using MainMenuEnhanced.MenuBackground;
 using MainMenuEnhanced.Settings;
+using UnityEngine;
 
 namespace MainPlugin;
 
@@ -16,8 +20,9 @@ namespace MainPlugin;
 [BepInDependency("gg.reactor.api")]
 public partial class MainMenuEnhancedPlugin : BasePlugin
 {
-    
+
     public static new ManualLogSource LogSource = null!;
+    
     public Harmony Harmony { get; } = new(Id);
     public string OptionsTitleText => "Menu Enhanced";
     public ConfigFile GetConfigFile() => Config;
@@ -26,11 +31,15 @@ public partial class MainMenuEnhancedPlugin : BasePlugin
 
     public static ConfigEntry<CustomSettings> BackgroundMode;
     public static ConfigEntry<CustomSettings> WindowMode;
-
-    private string folderPath = Path.Combine(Paths.PluginPath, "MainMenuEnhanced");
+    
+    private string folderPath;
     
     public override void Load()
     {
+        folderPath = OperatingSystem.IsAndroid()
+            ? CustomPaths.androidFolderPath
+            : CustomPaths.winFolderPath;
+        
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
@@ -47,11 +56,12 @@ public partial class MainMenuEnhancedPlugin : BasePlugin
    
         ReactorCredits.Register("MainMenuEnhanced", "0.4.0", false, null);
         Harmony.PatchAll();
+        
+        CustomUI.Initialize();
+        
         LogSource.LogInfo("MainMenuEnhanced Loaded");
         
     }
-
-    
 }
 
 

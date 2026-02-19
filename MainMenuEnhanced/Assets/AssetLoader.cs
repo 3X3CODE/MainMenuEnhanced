@@ -12,7 +12,9 @@ namespace MainMenuEnhanced.Assets;
 // this assetloader code was made by Gemini since i was too lazy
 public static class AssetLoader
 {
-    private static string path = Paths.PluginPath;
+    private static string path = OperatingSystem.IsAndroid()
+        ? CustomPaths.androidFolderPath
+        : CustomPaths.winFolderPath;
     
     private static readonly string ImagePathPNG = Path.Combine(path, "CustomBG.png");
     private static readonly string ImagePathJPG = Path.Combine(path, "CustomBG.jpg");

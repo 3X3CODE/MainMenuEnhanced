@@ -25,19 +25,19 @@ public class CustomMenu : MonoBehaviour
     {
         manager = GameObject.Find("MainMenuManager");
         tint = manager.transform.Find("MainUI/Tint").gameObject;
+        SpriteRenderer tintrend = tint.GetComponent<SpriteRenderer>();
+        tintrend.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        tintrend.sortingOrder = -2;
         windowShine = GameObject.Find("WindowShine");
         rightPanel = GameObject.Find("RightPanel").GetComponent<SpriteRenderer>();
-        rightPanel.GetComponent<AspectPosition>().enabled = false;
-        rightPanel.transform.position = new Vector3(2.35f, -0.3f, -5f);
-        rightPanel.transform.SetParent(transform);
         rightPanel.sortingOrder = -2;
         maskedScreen = GameObject.Find("MaskedBlackScreen").GetComponent<SpriteRenderer>();
-        maskedScreen.sortingOrder = -3;
+        maskedScreen.sortingOrder = -2;
         
         bg = FindObjectOfType<MainMenuManager>().transform.Find("MainUI/AspectScaler/BackgroundTexture").gameObject;
         bg.transform.SetParent(transform);
         BGrend = bg.GetComponent<SpriteRenderer>();
-        BGrend.sortingOrder = -4;
+        BGrend.sortingOrder = -3;
         bgSprite = BGrend.sprite;
         customSprite = AssetLoader.LoadExternalSprite();
         
@@ -55,7 +55,10 @@ public class CustomMenu : MonoBehaviour
                 text.text = "Start";
             }
         }
-        
+
+        MeshRenderer stars = GameObject.Find("starfield").GetComponent<MeshRenderer>();
+        stars.sortingOrder = -5;
+
     }
     
     public static void ApplyBGSettings()

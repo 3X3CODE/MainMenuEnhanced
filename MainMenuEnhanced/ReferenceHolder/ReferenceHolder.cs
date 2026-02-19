@@ -24,14 +24,11 @@ public class ReferenceHolder : MonoBehaviour
         
         buttonPrefab = AssetLoader.LoadAsset("menu","SettingsButton");
         
-        button = Instantiate(buttonPrefab, transform);
+        button = Instantiate(buttonPrefab);
         button.AddComponent<SettingsButton>();
         settings = gameObject.AddComponent<JsonFile>();
         gameObject.AddComponent<PropertyOverride>();
         gameObject.AddComponent<CustomMenu>();
         gameObject.AddComponent<Executor>();
-        gameObject.AddComponent<SortingGroup>();
-        GameObject particles = new GameObject("ParticleParent");
-        particles.transform.SetParent(transform);
     }
 }

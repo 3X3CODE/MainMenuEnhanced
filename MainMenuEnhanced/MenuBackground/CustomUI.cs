@@ -5,13 +5,13 @@ using TMPro;
 namespace MainMenuEnhanced.MenuBackground;
 
 // Resharper disable once InconsistentNaming
-[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
+//[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
 public class CustomUI
 {
-    [HarmonyPostfix]
-    public static void ModUI(MainMenuManager __instance)
+    //[HarmonyPostfix]
+    public static void Initialize()
     {
-        if (__instance == null) return;
+        //if (__instance == null) return;
         GameObject Text = GameObject.Find("ReactorVersion");
         if (Text != null)
         { 

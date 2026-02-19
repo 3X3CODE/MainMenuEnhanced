@@ -37,7 +37,7 @@ public class PositionData
 [RegisterInIl2Cpp]
 public class Executor : MonoBehaviour
 {
-    private readonly string path = Path.Combine(Paths.PluginPath, "MainMenuEnhanced", "config.xml");
+    private readonly string path = OperatingSystem.IsAndroid() ? CustomPaths.androidXmlPath : CustomPaths.winXmlPath;
 
     private DateTime lastSaved;
     private DateTime currentSave;

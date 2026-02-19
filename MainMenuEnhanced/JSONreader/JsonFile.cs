@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using System.Text.Json;
 using BepInEx;
+using MainPlugin;
 using Reactor.Utilities.Attributes;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -30,7 +31,7 @@ public class JsonFile : MonoBehaviour
 {
     public SettingsFile settings;
 
-    public string path = Path.Combine(Paths.PluginPath, "MainMenuEnhanced", "MMEconfig.json");
+    public string path; 
 
     private SettingsFile settingsNew;
     private JsonSerializerOptions options;
@@ -43,6 +44,11 @@ public class JsonFile : MonoBehaviour
         // true = keep past settings, don't update
         // false = update to latest settings, this will reset to default
         bool saveState = false;
+
+
+        path = OperatingSystem.IsAndroid()
+            ? CustomPaths.androidJsonPath
+            : CustomPaths.winJsonPath;
         
         settingsNew = new SettingsFile { GameObject = "insert_gameobject_name", Property =  "ex: SetActive, Sprite", Component = "component", Save = true};
         options = new JsonSerializerOptions
