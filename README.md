@@ -29,10 +29,11 @@ Feel free to report any and all issues. <br>
 
 ## Installation Guide
 Put `MainMenuEnhanced.dll` in the **`BepInEx/plugins`** folder. <br>
-Put your desired Background image in the same folder. <br>
+Put your desired Background image in the `MainMenuEnhanced` folder. <br>
 *The image must be a **png** file and renamed to **CustomBG*** <br>
 An example,
-`CustomBG.png`
+`CustomBG.png` <br>
+If you don't see the folder, run the game once so the mod can create it.
 
 > [!WARNING]
 > This mod requires **[BepInEx](https://builds.bepinex.dev/projects/bepinex_be)** and **[Reactor](https://github.com/nuclearpowered/reactor)** to function properly. <br>
