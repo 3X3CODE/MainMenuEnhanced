@@ -1,124 +1,113 @@
 using System;
-using MainMenuEnhanced.Settings;
-using MainPlugin;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
 namespace MainMenuEnhanced.InteractiveMenu;
+
 [RegisterInIl2Cpp]
 public class GrabbableParticle : MonoBehaviour
 {
-    public GrabbableParticle(System.IntPtr ptr) : base(ptr) { }
-
     PlayerParticle myParticle;
     bool isGrabbed;
     private float Distance;
     private Vector2 mousePos;
     private Vector2 offset;
-
-    private static SpriteRenderer[] allRends;
+    private int? activeFingerId = null;
+    Touch? activeTouch = null;
 
     void Start()
     {
         myParticle = gameObject.GetComponent<PlayerParticle>();
-        myParticle.enabled = false;
-        myParticle.enabled = true;
         SpriteRenderer rend = gameObject.GetComponent<SpriteRenderer>();
         rend.sortingOrder = -4;
-
-        allRends = transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>();
     }
     void Update()
     {
         if (OperatingSystem.IsAndroid())
         {
+            #region AndroidDrag
+            
             if (Input.touchCount > 0)
             {
-                foreach (Touch touch in Input.touches)
+                if (activeTouch == null)
                 {
-                    mousePos = Camera.main.ScreenToWorldPoint(touch.position);
-                    Distance = Vector3.Distance(mousePos, gameObject.transform.position);
-                    
-                    if (Distance < 0.7f)
+                    foreach (Touch touch in Input.touches)
                     {
-                        offset = (Vector2)transform.position - mousePos;
-                        
-                        if (touch.phase == TouchPhase.Began) myParticle.enabled = false;
+                        if (touch.phase == TouchPhase.Began)
+                        {
+                            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+                            if (Vector3.Distance(touchPos, transform.position) < 0.7f)
+                            {
+                                activeTouch = touch;
+                                offset = (Vector2)transform.position - touchPos;
+                                myParticle.enabled = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (activeTouch.HasValue)
+                    {
+                        Touch touch = activeTouch.Value;
+                        Vector2 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
+
                         if (touch.phase == TouchPhase.Moved)
                         {
                             transform.Rotate(0f, 0f, Time.deltaTime * myParticle.angularVelocity);
-                            transform.position = mousePos + offset;
+                            transform.position = worldPos + offset;
+                        }
+                        else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                        {
+                            myParticle.enabled = true;
+                            activeFingerId = null;
+                            activeTouch = null;
                         }
                     }
-
-                    if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                    else
                     {
                         myParticle.enabled = true;
+                        activeFingerId = null;
+                        activeTouch = null;
                     }
                 }
             }
+            
+            #endregion
         }
 
         else
         {
-            mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-        
+            #region PCDrag
+            
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
             if (Input.GetMouseButtonDown(0))
             {
-                Distance = Vector3.Distance(mousePos, gameObject.transform.position);
-                if (Distance < 0.7f)
+                if (Vector3.Distance(mousePos, transform.position) < 0.7f)
                 {
                     isGrabbed = true;
                     offset = (Vector2)transform.position - mousePos;
                 }
             }
-            if (isGrabbed && Input.GetMouseButton(0))
+
+            if (isGrabbed)
             {
-                if (Distance < 0.7f)
+                if (Input.GetMouseButton(0))
                 {
                     myParticle.enabled = false;
-                    transform.Rotate(0f,0f,Time.deltaTime * myParticle.angularVelocity);
+                    transform.Rotate(0, 0, Time.deltaTime * myParticle.angularVelocity);
                     transform.position = mousePos + offset;
                 }
+                else
+                {
+                    isGrabbed = false;
+                    myParticle.enabled = true;
+                }
             }
-        
-            if (Input.GetMouseButtonUp(0))
-            {
-                isGrabbed = false;
-                myParticle.enabled = true;
-            }
-        }
-        
-        
-        Vector3 position = transform.position;
-        float distance = position.sqrMagnitude;
-        if (distance > 6f * 6f)
-        {
-            gameObject.SetActive(false);
-            transform.position = new Vector2(0f, 0f);
-            gameObject.SetActive(true);
+            
+            #endregion
         }
     }
-    
-    public static void changeMask()
-    {
-        switch (MainMenuEnhancedPlugin.WindowMode.Value)
-        {
-            case CustomSettings.WindowActive:
-                foreach (SpriteRenderer rend in allRends)
-                {
-                    rend.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                }
-
-                break;
-            case CustomSettings.WindowInactive:
-                foreach (SpriteRenderer rend in allRends)
-                {
-                    rend.maskInteraction = SpriteMaskInteraction.None;
-                }
-
-                break;
-        }
-    }
-    
 }

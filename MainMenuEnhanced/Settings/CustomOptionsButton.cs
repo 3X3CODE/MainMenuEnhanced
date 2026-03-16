@@ -1,6 +1,7 @@
 using System;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MainMenuEnhanced.Settings;
 
@@ -22,11 +23,15 @@ public class CustomOptionsButton : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (OperatingSystem.IsAndroid()) return;
+        
         highlight.gameObject.SetActive(true);
     }
     
     private void OnMouseExit()
     {
+        if (OperatingSystem.IsAndroid()) return;
+        
         highlight.gameObject.SetActive(false);
     }
     

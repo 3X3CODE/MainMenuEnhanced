@@ -1,7 +1,6 @@
+using System;
 using System.Collections.Generic;
-using MainMenuEnhanced.InteractiveMenu;
 using MainMenuEnhanced.MenuBackground;
-using MainPlugin;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
@@ -10,8 +9,6 @@ namespace MainMenuEnhanced.Settings;
 [RegisterInIl2Cpp]
 public class CustomSettingsBehaviour : MonoBehaviour
 {
-    public CustomSettingsBehaviour(System.IntPtr ptr) : base(ptr) { }
-    
     private Transform buttonParentTransform;
     private static CustomOptionsButton currentBackgroundButton;
     private static CustomOptionsButton currentWindowButton;
@@ -49,16 +46,32 @@ public class CustomSettingsBehaviour : MonoBehaviour
         }
 
         closeCollider = transform.Find("Background").GetComponent<BoxCollider2D>();
-
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (OperatingSystem.IsAndroid())
         {
-            if (!closeCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            if (Input.touchCount > 0)
             {
-                gameObject.SetActive(false);
+                foreach (Touch touch in Input.touches)
+                {
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(touch.position);
+                    if (!closeCollider.OverlapPoint(mousePos))
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!closeCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -83,6 +96,13 @@ public class CustomSettingsBehaviour : MonoBehaviour
 
         MainMenuEnhancedPlugin.config.Save();
         CustomMenu.ApplyBGSettings();
-        GrabbableParticle.changeMask();
+    }
+
+    private void OnDestroy()
+    {
+        settingsDefinition = null;
+        buttons = null;
+        currentBackgroundButton = null;
+        currentWindowButton = null;
     }
 }

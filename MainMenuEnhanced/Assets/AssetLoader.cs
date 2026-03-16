@@ -3,35 +3,33 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using BepInEx;
-using MainPlugin;
 
 namespace MainMenuEnhanced.Assets;
 
-
-// this assetloader code was made by Gemini since i was too lazy
+// this assetloader code was made by Gemini since I was too lazy
 public static class AssetLoader
 {
-    private static string path = OperatingSystem.IsAndroid()
-        ? CustomPaths.androidFolderPath
-        : CustomPaths.winFolderPath;
-    
-    private static readonly string ImagePathPNG = Path.Combine(path, "CustomBG.png");
-    private static readonly string ImagePathJPG = Path.Combine(path, "CustomBG.jpg");
-    private static readonly string ImagePathJPEG = Path.Combine(path, "CustomBG.jpeg");
     private static string ImagePath;
 
     public static Sprite LoadExternalSprite()
     {
-        if (!File.Exists(ImagePathPNG) && !File.Exists(ImagePathJPG) && !File.Exists(ImagePathJPEG))
+        string[] extensions = { ".png", ".jpg", ".jpeg" };
+        
+        foreach (string ext in extensions)
         {
-            MainMenuEnhancedPlugin.LogSource.LogWarning($"[Signal] External image not found at {ImagePathPNG}. Using default background.");
+            string tempPath = Path.Combine(CustomPaths.ModFolder, "CustomBG" + ext);
+            if (File.Exists(tempPath))
+            {
+                ImagePath = tempPath;
+                break;
+            }
+        }
+        
+        if (ImagePath.IsNullOrWhiteSpace())
+        {
+            MainMenuEnhancedPlugin.LogSource.LogWarning($"External image not found. Using default background.");
             return null;
         }
-
-        if (File.Exists(ImagePathPNG)) ImagePath = ImagePathPNG;
-        if (File.Exists(ImagePathJPG)) ImagePath = ImagePathJPG;
-        if (File.Exists(ImagePathJPEG)) ImagePath = ImagePathJPEG;
 
         try
         {
@@ -46,48 +44,21 @@ public static class AssetLoader
         }
         catch (Exception e)
         {
-            MainMenuEnhancedPlugin.LogSource.LogError($"[Signal] Failed to load external sprite: {e.Message}");
+            MainMenuEnhancedPlugin.LogSource.LogError($"Failed to load external sprite: {e.Message}");
         }
 
         return null;
     }
-
-    public static Sprite LoadSprite(string path)
-    {
-        if (!File.Exists(path))
-        {
-            MainMenuEnhancedPlugin.LogSource.LogInfo("sprite doesn't exist");
-        }
-        try
-        {
-            byte[] fileData = File.ReadAllBytes(path);
-            
-            Texture2D texture = new Texture2D(2, 2);
-            
-            if (ImageConversion.LoadImage(texture, fileData))
-            {
-                return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            }
-        }
-        catch (Exception e)
-        {
-            MainMenuEnhancedPlugin.LogSource.LogError($"[Signal] Failed to load sprite: {e.Message}");
-        }
-
-        return null;
-    
-    }
-
     public static GameObject LoadAsset(string bundleName, string assetName)
     {
         Assembly asm = Assembly.GetExecutingAssembly();
 
-        string resourceName = asm.GetManifestResourceNames()
+        string? resourceName = asm.GetManifestResourceNames()
             .FirstOrDefault(name => name.Contains(bundleName));
 
         if (resourceName == null)
         {
-            MainMenuEnhancedPlugin.LogSource.LogError($"[Mod] Could not find {bundleName} in DLL");
+            MainMenuEnhancedPlugin.LogSource.LogError($"Could not find {bundleName} in DLL");
             return null;
         }
 
@@ -100,7 +71,7 @@ public static class AssetLoader
 
             if (bundle == null)
             {
-                MainMenuEnhancedPlugin.LogSource.LogError($"[Mod] Failed to load bundle from memory");
+                MainMenuEnhancedPlugin.LogSource.LogError("Failed to load bundle from memory");
                 return null;
             }
 

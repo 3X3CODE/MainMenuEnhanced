@@ -1,9 +1,6 @@
 using MainMenuEnhanced.Assets;
-using MainMenuEnhanced.JSONreader;
 using MainMenuEnhanced.Settings;
-using MainPlugin;
 using Reactor.Utilities.Attributes;
-using TMPro;
 using UnityEngine;
 
 namespace MainMenuEnhanced.MenuBackground;
@@ -11,9 +8,9 @@ namespace MainMenuEnhanced.MenuBackground;
 [RegisterInIl2Cpp]
 public class CustomMenu : MonoBehaviour
 {
-    private static GameObject bg;
+    private GameObject bg;
     private static SpriteRenderer BGrend;
-    private static GameObject manager;
+    private GameObject manager;
     private static GameObject tint;
     private static GameObject windowShine;
     private static SpriteRenderer rightPanel;
@@ -23,44 +20,43 @@ public class CustomMenu : MonoBehaviour
     
     private void Start()
     {
-        manager = GameObject.Find("MainMenuManager");
-        tint = manager.transform.Find("MainUI/Tint").gameObject;
-        SpriteRenderer tintrend = tint.GetComponent<SpriteRenderer>();
-        tintrend.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-        tintrend.sortingOrder = -2;
+        tint = GameObject.Find("/MainMenuManager/MainUI/Tint").gameObject;
+        SpriteRenderer tintRend = tint.GetComponent<SpriteRenderer>();
+        tintRend.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        tintRend.sortingOrder = -2;
+        
         windowShine = GameObject.Find("WindowShine");
+        
         rightPanel = GameObject.Find("RightPanel").GetComponent<SpriteRenderer>();
         rightPanel.sortingOrder = -2;
         maskedScreen = GameObject.Find("MaskedBlackScreen").GetComponent<SpriteRenderer>();
         maskedScreen.sortingOrder = -2;
         
-        bg = FindObjectOfType<MainMenuManager>().transform.Find("MainUI/AspectScaler/BackgroundTexture").gameObject;
-        bg.transform.SetParent(transform);
+        bg = GameObject.Find("/MainMenuManager/MainUI/AspectScaler/BackgroundTexture").gameObject;
         BGrend = bg.GetComponent<SpriteRenderer>();
         BGrend.sortingOrder = -3;
         bgSprite = BGrend.sprite;
         customSprite = AssetLoader.LoadExternalSprite();
-        
-        ApplyBGSettings();
-        
-        GameObject playTransform = manager.transform.Find("MainUI/AspectScaler/LeftPanel/Main Buttons/PlayButton/FontPlacer/Text_TMP").gameObject;
-        if (playTransform != null) 
-        {
-            if (playTransform.TryGetComponent<TextTranslatorTMP>(out var tmp))
-            {
-                tmp.enabled = false;
-            }
-            if (playTransform.TryGetComponent<TextMeshPro>(out var text))
-            {
-                text.text = "Start";
-            }
-        }
 
         MeshRenderer stars = GameObject.Find("starfield").GetComponent<MeshRenderer>();
         stars.sortingOrder = -5;
+        
+        GameObject.Find("/MainMenuManager/MainUI/AspectScaler/RightPanel/MaskedBlackScreen/GameModeButtons/Divider").SetActive(false); 
 
+        ApplyBGSettings();
     }
-    
+
+    private void OnDestroy()
+    {
+        BGrend = null;
+        tint = null;
+        windowShine = null;
+        rightPanel = null;
+        maskedScreen = null;
+        bgSprite = null;
+        customSprite = null;
+    }
+
     public static void ApplyBGSettings()
     {
         switch (MainMenuEnhancedPlugin.BackgroundMode.Value)
