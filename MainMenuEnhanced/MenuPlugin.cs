@@ -44,7 +44,7 @@ public partial class MainMenuEnhancedPlugin : BasePlugin
 
         LogSource = base.Log;
    
-        ReactorCredits.Register("MainMenuEnhanced", "0.4.1", true, null);
+        ReactorCredits.Register("MainMenuEnhanced", "0.5.0", false, null);
         Harmony.PatchAll();
         
         LogSource.LogInfo("MainMenuEnhanced Loaded");
